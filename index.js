@@ -4,11 +4,11 @@ const bot = require('./services/botHelper');
 const web = require('./services/webHelper');
 
 stateManager.load();
-let timeoutId = setTimeout(() => {
+let timeoutId = setInterval(() => {
     if (bot.ready){
         bot.start(stateManager);
         web.start(stateManager, bot);
-        
-        clearTimeout(timeoutId);
+
+        clearInterval(timeoutId);
     }
 }, 100);
