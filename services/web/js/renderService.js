@@ -1,6 +1,13 @@
 class RenderService{
+    constructor(){
+        this.cache = {};
+    }
+
     render(template, values){
-        let renderedHtml = document.querySelector(`script#${template}`).innerHTML;;
+        const templateKey = `script#${template}`;
+
+        let renderedHtml = 
+            this.cache[templateKey] || document.querySelector(templateKey).innerHTML;
 
         let keys = Object.keys(values);
 
@@ -18,5 +25,9 @@ class RenderService{
         let element = document.querySelector(target);
 
         element.innerHTML = html;
+    }
+
+    dropCache(){
+        this.cache = {};
     }
 }

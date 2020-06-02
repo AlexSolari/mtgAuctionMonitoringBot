@@ -18,7 +18,7 @@ class StateManager{
             if (err) {
                 console.error(err);
             } else {
-                let loadedData = JSON.parse(data);
+                const loadedData = JSON.parse(data);
                 this.state.bets = loadedData.bets || {};
                 this.state.lots = loadedData.lots || [];
             }

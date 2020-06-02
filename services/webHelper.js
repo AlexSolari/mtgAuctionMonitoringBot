@@ -28,25 +28,27 @@ class WebHelper {
                 });
         });
         this.app.get('/bet', (req, res) => {
-            let lotId = req.query.id;
+            const lotId = req.query.id;
 
             res.send({
                 value: stateManager.state.bets[lotId] || "Нет ставки"
             });
         });
         this.app.get('/data', (req, res) => {
-            let pattern = /(\d{1,2})\.(\d{1,2})\.(\d{4})/;
+            const dateNow = Date.now();
+            const pattern = /(\d{1,2})\.(\d{1,2})\.(\d{4})/;
 
-            let mapped = stateManager.state.lots.filter(l => l != null).filter(l => {
-                let dt = new Date(l.dateEnd.replace(pattern, '$3-$2-$1'));
+            const mapped = stateManager.state.lots.filter(l => l != null).filter(l => {
+                const dt = new Date(l.dateEnd.replace(pattern, '$3-$2-$1'));
                 dt.setHours(23, 59, 59);
 
-                return Date.now() <= dt;
+                return dateNow <= dt;
             }).reduce(
                 (accumulator, current) => accumulator.some(x => x.id === current.id) ? accumulator : [...accumulator, current], []
             ).sort(l => {
-                let dt = new Date(l.dateEnd.replace(pattern, '$3-$2-$1'));
-                return dt.getTime();
+                const dt = new Date(l.dateEnd.replace(pattern, '$3-$2-$1'));
+                
+                return dateNow;
             });
 
             res.send(mapped);

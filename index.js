@@ -4,7 +4,7 @@ const bot = require('./services/botHelper');
 const web = require('./services/webHelper');
 
 stateManager.load();
-let timeoutId = setInterval(() => {
+const timeoutId = setInterval(() => {
     if (bot.ready){
         bot.start(stateManager);
         web.start(stateManager, bot);

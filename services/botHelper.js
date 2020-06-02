@@ -15,8 +15,8 @@ class BotHelper {
         this.bot = new TeleBot(this.token);
 
         this.bot.on('*', (msg) => {
+            const lot = parser.parse(msg.text || msg.caption);
             let img = null;
-            let lot = parser.parse(msg.text || msg.caption);
 
             if (msg.photo && msg.photo.length != 0) {
                 img = msg.photo.pop();
@@ -32,8 +32,8 @@ class BotHelper {
                 this.stateManager.state.lots.push(lot);
             }
             else if (msg.reply_to_message) {
-                let replyId = msg.reply_to_message.message_id;
-                let lotToFind = this.stateManager.state.lots.filter(x => x.id == replyId)[0];
+                const replyId = msg.reply_to_message.message_id;
+                const lotToFind = this.stateManager.state.lots.filter(x => x.id == replyId)[0];
 
                 if (lotToFind) {
                     if (msg.text.indexOf("победител") != -1) {
